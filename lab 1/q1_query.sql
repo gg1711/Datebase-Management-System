@@ -35,16 +35,19 @@ select s.name from student s, offer o where s.sroll = o.sroll AND s.gender = 'F'
 select branch,count(branch) from Student
 where sroll in (select sroll from Offer)
 group by branch;
---to get the name of branches with maximum no. of offers
+OR
 select count(*), s.branch from student s, offer o where s.sroll = o.sroll
-group by s.branch 
-having count(*) = (select max(count(*))from student s, offer o where s.sroll = o.sroll
-group by s.branch ) ;
+group by s.branch;
 
 --query g
 select sroll,name from Student
 where sroll in (select sroll from offer 
 where osalary = (select max(osalary) from offer));
+
+OR
+
+select s.name, o.osalary from student s, offer o 
+where s.sroll = o.sroll AND o.osalary = (select max(p.osalary) from offer p);
 
 --query h
 drop view mx;
@@ -63,11 +66,20 @@ where s.sroll=o.sroll group by s.branch ;
 
 select branch from br
 where cnt = (select max(cnt) from br);
+OR
+select count(*), s.branch from student s, offer o where s.sroll = o.sroll
+group by s.branch
+having count(*) = (select max(count(*)) from student s, offer o where s.sroll = o.sroll
+group by s.branch);
 
 --query j
 select name from student
 MINUS
 select s.name from student s, offer o where s.sroll=o.sroll;
+
+select count(s.sroll), s.branch from  student s
+where s.sroll NOT IN (select o.sroll from offer o)
+group by s.branch;
 
 --query k
 select s.name, s.gender, s.branch, c.name, c.specification, o.osalary 
