@@ -40,3 +40,16 @@ exception
 
 end;
 /
+
+------------------------FUNCTION WRITING ---------------------------------------
+
+create or replace function issue_book
+ 	(opt in varchar2, cno in int, cname in  varchar2, bookid in int)
+	return int as done int;
+	
+	----can define cursor here -----
+begin
+	select count(*) into done from book_stock;
+	return done;
+end;
+/
