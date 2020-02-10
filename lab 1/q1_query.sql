@@ -3,28 +3,43 @@
 select name,branch from Student 
 where sroll in (select sroll from offer);
 
+select distinct s.name, s.branch from Student s, offer o where s.sroll = o.sroll;
+
 --query b
 select sroll,name from Student 
 where sroll in (select sroll from offer where osalary>100);
+
+select s.name from student s, offer o where s.sroll = o.sroll AND o.osalary > 100;
 
 --query c
 select sroll,name from student
 where sroll  in (select sroll from interview) AND sroll NOT in (select sroll from offer);
 
+select s.name from student s, interview i where s.sroll = i.sroll
+MINUS
+select s.name from student s, offer o where s.sroll = o.sroll;
+
 --query d
 select sroll,name from Student 
 where sroll in (select sroll from offer) AND programme='M.Tech';
 
+select s.name from student s, offer o where s.sroll = o.sroll AND s.programme = 'M.Tech';
 
 --query e
 select sroll,name from Student 
 where sroll in (select sroll from offer) AND gender='F';
+
+select s.name from student s, offer o where s.sroll = o.sroll AND s.gender = 'F';
 
 --query f
 select branch,count(branch) from Student
 where sroll in (select sroll from Offer)
 group by branch;
 
+select count(*), s.branch from student s, offer o where s.sroll = o.sroll
+group by s.branch 
+having count(*) = (select max(count(*))from student s, offer o where s.sroll = o.sroll
+group by s.branch ) ;
 
 --query g
 select sroll,name from Student
