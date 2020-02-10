@@ -35,7 +35,7 @@ select s.name from student s, offer o where s.sroll = o.sroll AND s.gender = 'F'
 select branch,count(branch) from Student
 where sroll in (select sroll from Offer)
 group by branch;
-
+--to get the name of branches with maximum no. of offers
 select count(*), s.branch from student s, offer o where s.sroll = o.sroll
 group by s.branch 
 having count(*) = (select max(count(*))from student s, offer o where s.sroll = o.sroll
